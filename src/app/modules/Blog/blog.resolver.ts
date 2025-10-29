@@ -1,5 +1,3 @@
-import { gqlResponse } from "../../shared/graphqlResponse";
-import { TBlog } from "./blog.interface";
 import { BlogServices } from "./blog.service"
 
 export const blogResolvers = {
