@@ -30,8 +30,18 @@ const getBlogByIdFromDB = async (id: string) => {
     return blog;
 }
 
+const updateBlogByIdToDB = async (id: string, payload: Partial<TBlog>) => {
+    const blog = await Blog.findByIdAndUpdate(id, payload, { new: true });
+    if (!blog) {
+        throw new ApiError(400, "Failed to update blog")
+    };
+
+    return blog;
+}
+
 export const BlogServices = {
     createBlogToDB,
     getBlogsFromDB,
     getBlogByIdFromDB,
+    updateBlogByIdToDB,
 }
