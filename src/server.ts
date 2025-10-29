@@ -3,7 +3,8 @@ import app from './app';
 import mongoose from 'mongoose';
 import { Server } from 'http';
 import config from './app/config';
-import { createBlogGraphqlServer } from './app/modules/Blog/blog.route';
+import { createGraphqlServer } from './app/graphql/createGraphqlServer';
+
 
 let server: Server;
 
@@ -13,8 +14,8 @@ async function bootstrap() {
     console.log('MongoDB Connected');
 
     // Apollo Middleware যোগ করো
-    const apolloMiddleware = await createBlogGraphqlServer();
-    app.use('/graphql', apolloMiddleware);
+   const graphqlMiddleware = await createGraphqlServer();
+    app.use('/graphql', graphqlMiddleware);
 
     server = app.listen(config.port, () => {
       console.log(`Server is running on port: ${config.port}`);
