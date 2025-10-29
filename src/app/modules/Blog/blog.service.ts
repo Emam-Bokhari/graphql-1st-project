@@ -2,8 +2,8 @@ import ApiError from "../../errors/ApiError";
 import { TBlog } from "./blog.interface";
 import { Blog } from "./blog.model"
 
-const createBlogToDB = async (payload: TBlog) => {
-    const blog = await Blog.create(payload);
+const createBlogToDB = async (input: TBlog) => {
+    const blog = await Blog.create(input);
     if (!blog) {
         throw new ApiError(400, "Failed to create blog")
     };
@@ -30,8 +30,8 @@ const getBlogByIdFromDB = async (id: string) => {
     return blog;
 }
 
-const updateBlogByIdToDB = async (id: string, payload: Partial<TBlog>) => {
-    const blog = await Blog.findByIdAndUpdate(id, payload, { new: true });
+const updateBlogByIdToDB = async (id: string, input: Partial<TBlog>) => {
+    const blog = await Blog.findByIdAndUpdate(id, input, { new: true });
     if (!blog) {
         throw new ApiError(400, "Failed to update blog")
     };

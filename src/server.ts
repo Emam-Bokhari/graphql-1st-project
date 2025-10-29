@@ -1,36 +1,42 @@
+// src/server.ts
 import app from './app';
 import mongoose from 'mongoose';
 import { Server } from 'http';
 import config from './app/config';
+import { createBlogGraphqlServer } from './app/modules/Blog/blog.route';
 
 let server: Server;
 
-async function main() {
+async function bootstrap() {
   try {
     await mongoose.connect(config.database_url as string);
+    console.log('MongoDB Connected');
+
+    // Apollo Middleware যোগ করো
+    const apolloMiddleware = await createBlogGraphqlServer();
+    app.use('/graphql', apolloMiddleware);
+
     server = app.listen(config.port, () => {
       console.log(`Server is running on port: ${config.port}`);
+      console.log(`GraphQL Playground: http://localhost:${config.port}/graphql`);
     });
   } catch (err) {
-    console.log(err);
+    console.log('Failed to connect database', err);
   }
 }
 
-main();
+bootstrap();
 
-// asynchronous
 process.on('unhandledRejection', () => {
-  console.log(`👿 unhandledRejection is detected, shutting down...`);
+  console.log(`Unhandled Rejection is detected, shutting down...`);
   if (server) {
-    server.close(() => {
-      process.exit(1);
-    });
+    server.close(() => process.exit(1));
+  } else {
+    process.exit(1);
   }
-  process.exit(1);
 });
 
-// synchornous
 process.on('uncaughtException', () => {
-  console.log(`👿 uncaughtExecption is detected, shutting down...`);
+  console.log(`Uncaught Exception is detected, shutting down...`);
   process.exit(1);
 });
