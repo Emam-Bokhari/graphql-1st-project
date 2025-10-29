@@ -21,7 +21,17 @@ const getBlogsFromDB = async () => {
 
 }
 
+const getBlogByIdFromDB = async (id: string) => {
+    const blog = await Blog.findById(id);
+    if (!blog) {
+        throw new ApiError(404, `No blog are found by this ${id}`);
+    };
+
+    return blog;
+}
+
 export const BlogServices = {
     createBlogToDB,
     getBlogsFromDB,
+    getBlogByIdFromDB,
 }
