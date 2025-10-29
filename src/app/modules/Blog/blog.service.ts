@@ -1,57 +1,56 @@
-import ApiError from "../../errors/ApiError";
-import { TBlog } from "./blog.interface";
-import { Blog } from "./blog.model"
+import ApiError from '../../errors/ApiError';
+import { TBlog } from './blog.interface';
+import { Blog } from './blog.model';
 
 const createBlogToDB = async (input: TBlog) => {
-    const blog = await Blog.create(input);
-    if (!blog) {
-        throw new ApiError(400, "Failed to create blog")
-    };
-    return blog;
-}
+  const blog = await Blog.create(input);
+  if (!blog) {
+    throw new ApiError(400, 'Failed to create blog');
+  }
+  return blog;
+};
 
 const getBlogsFromDB = async () => {
-    const blogs = await Blog.find();
+  const blogs = await Blog.find();
 
-    if (!blogs || blogs.length === 0) {
-        throw new ApiError(404, "No blogs are found in the database")
-    };
+  if (!blogs || blogs.length === 0) {
+    throw new ApiError(404, 'No blogs are found in the database');
+  }
 
-    return blogs;
-
-}
+  return blogs;
+};
 
 const getBlogByIdFromDB = async (id: string) => {
-    const blog = await Blog.findById(id);
-    if (!blog) {
-        throw new ApiError(404, `No blog are found by this ${id}`);
-    };
+  const blog = await Blog.findById(id);
+  if (!blog) {
+    throw new ApiError(404, `No blog are found by this ${id}`);
+  }
 
-    return blog;
-}
+  return blog;
+};
 
 const updateBlogByIdToDB = async (id: string, input: Partial<TBlog>) => {
-    const blog = await Blog.findByIdAndUpdate(id, input, { new: true });
-    if (!blog) {
-        throw new ApiError(400, "Failed to update blog")
-    };
+  const blog = await Blog.findByIdAndUpdate(id, input, { new: true });
+  if (!blog) {
+    throw new ApiError(400, 'Failed to update blog');
+  }
 
-    return blog;
-}
+  return blog;
+};
 
 const deleteBlogByIdFromDB = async (id: string) => {
-    const blog = await Blog.findByIdAndDelete(id);
-    if (!blog) {
-        throw new ApiError(400, `Failed to delete blog by ${id}`)
-    };
+  const blog = await Blog.findByIdAndDelete(id);
+  if (!blog) {
+    throw new ApiError(400, `Failed to delete blog by ${id}`);
+  }
 
-    return blog;
-}
+  return blog;
+};
 
 export const BlogServices = {
-    createBlogToDB,
-    getBlogsFromDB,
-    getBlogByIdFromDB,
-    updateBlogByIdToDB,
-    deleteBlogByIdFromDB,
-}
+  createBlogToDB,
+  getBlogsFromDB,
+  getBlogByIdFromDB,
+  updateBlogByIdToDB,
+  deleteBlogByIdFromDB,
+};

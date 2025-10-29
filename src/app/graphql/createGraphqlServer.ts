@@ -1,18 +1,17 @@
-import { ApolloServer } from "@apollo/server"
-import { typeDefs } from "./schema"
-import { resolvers } from "./resolver"
-import { expressMiddleware } from "@apollo/server/express4"
+import { ApolloServer } from '@apollo/server';
+import { typeDefs } from './schema';
+import { resolvers } from './resolver';
+import { expressMiddleware } from '@apollo/server/express4';
 
 export const createGraphqlServer = async () => {
-    const server = new ApolloServer({
-        typeDefs,
-        resolvers
-    })
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+  });
 
-    await server.start();
+  await server.start();
 
-    return expressMiddleware(server, {
-        context: async ({ req }) => ({ req })
-    })
-
-}
+  return expressMiddleware(server, {
+    context: async ({ req }) => ({ req }),
+  });
+};

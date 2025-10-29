@@ -1,5 +1,5 @@
 export type TBlog = {
-    title: string;
-    content: string;
-    author: string;
-}
+  title: string;
+  content: string;
+  author: string;
+};

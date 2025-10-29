@@ -2,7 +2,7 @@
 export const gqlResponse = <T>(
   data: T | T[] | null,
   message: string = 'Success',
-  success: boolean = true
+  success: boolean = true,
 ) => {
   return {
     success,
