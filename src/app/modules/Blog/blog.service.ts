@@ -39,9 +39,19 @@ const updateBlogByIdToDB = async (id: string, payload: Partial<TBlog>) => {
     return blog;
 }
 
+const deleteBlogByIdFromDB = async (id: string) => {
+    const blog = await Blog.findByIdAndDelete(id);
+    if (!blog) {
+        throw new ApiError(400, `Failed to delete blog by ${id}`)
+    };
+
+    return blog;
+}
+
 export const BlogServices = {
     createBlogToDB,
     getBlogsFromDB,
     getBlogByIdFromDB,
     updateBlogByIdToDB,
+    deleteBlogByIdFromDB,
 }
