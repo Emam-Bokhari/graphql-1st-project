@@ -11,8 +11,5 @@ app.get('/', (req, res) => {
   res.send('GraphQL Server is running...');
 });
 
-app.get('/health', (req, res) => {
-  res.send('Server is healthy!');
-});
 
 export default app;
